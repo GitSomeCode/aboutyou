@@ -59,7 +59,8 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/vagrant/app/templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        #'DIRS': ['/vagrant/app/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
