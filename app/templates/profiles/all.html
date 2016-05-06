@@ -14,6 +14,10 @@ Tweet something!
 			{{ profile.first_name }}
 			{{ profile.last_name }}
 			<img src="{{ profile.get_image_url }}">
+
+			{% for tag in profile.tags.all %}
+			<div class="badge">{{ tag }}</div>
+			{% endfor %}
 		</div>
 	{% endfor %}
 {% endblock %}

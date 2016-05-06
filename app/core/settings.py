@@ -124,7 +124,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'build')
+print "static route is...... " + STATIC_ROOT
+STATICFILES_DIRS = (
+    #os.path.join(PROJECT_DIR, 'static/libraries'), # Commercial libraries not available on GitHub or via Bower
+    #os.path.join(PROJECT_DIR, 'static/custom'), # Custom frontend assets in css/js subfolders
+    # os.path.join(STATIC_ROOT, 'bower_components'), # Bower controlled assets
+    os.path.join(os.path.dirname(BASE_DIR), 'static'),
+)
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
 
