@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'profiles',
 ]
 
-TAGGIT_CASE_INSENSITIVE = True
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
