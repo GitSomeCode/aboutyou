@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# IP that requests come from. For debug toolbar
+# Added print request.META.get('REMOTE_ADDR', None) in views to see IP.
+INTERNAL_IPS = ('127.0.0.1', '10.0.2.2',)
+
 
 # Application definition
 
@@ -37,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'taggit',
     'profiles',
 ]

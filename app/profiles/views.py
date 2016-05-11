@@ -10,6 +10,7 @@ def success(request):
     return HttpResponse('success!!!')
 
 def index(request):
+    print request.META.get('REMOTE_ADDR', None)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
 
@@ -20,6 +21,8 @@ def index(request):
             profile_info.save()
             form.save_m2m()
             return redirect('success')
+        else:
+            print form.errors
     else:
         form = ProfileForm()
 

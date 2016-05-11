@@ -5,6 +5,7 @@ from taggit.managers import TaggableManager
 
 # Create your models here.
 class Profile(models.Model):
+	# Required fields
 	first_name = models.CharField(max_length=70)
 	last_name = models.CharField(max_length=70)
 	location = models.CharField(max_length=120)

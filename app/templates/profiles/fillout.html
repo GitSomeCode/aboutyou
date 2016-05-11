@@ -25,6 +25,11 @@ Make your profile!
   					<form action='.' method='post' enctype="multipart/form-data">
 						<!-- <div class="form-group"> -->
 						{% csrf_token %}
+
+						{% for hidden in form.hidden_fields %}
+                			{{ hidden }}
+            			{% endfor %}
+
 						{{ form.as_table }}
 						<!-- </div> -->
 						<button class='btn btn-default' type='submit'>Submit</button>
