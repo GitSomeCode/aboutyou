@@ -17,10 +17,12 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth import urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('profiles.urls')),
+    url('^', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:
