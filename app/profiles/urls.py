@@ -6,5 +6,6 @@ urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^success/$', views.success, name='success'),
 	url(r'^all/$', views.ProfileView.as_view(), name='all'),
-	url(r'^login/$', login, {'template_name':'registration/login.html'}),
+	url(r'^login/$', views.custom_login, name='custom_login'),
+
 ]

@@ -20,7 +20,7 @@
 			{% if user.is_authenticated %}
     			<p>
     				Welcome, {{ user.get_username }}. Thanks for 
-    				<a href="{% url 'login' %}">logging in</a>.
+    				<a href="{% url 'custom_login' %}">logging in</a>.
     			</p>
 			{% else %}
     			<p>Welcome, new user. Please log in.</p>
