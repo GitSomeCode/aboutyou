@@ -17,6 +17,15 @@
 
 	<body>
 		<div class="container-fluid">
+			{% if user.is_authenticated %}
+    			<p>
+    				Welcome, {{ user.get_username }}. Thanks for 
+    				<a href="{% url 'login' %}">logging in</a>.
+    			</p>
+			{% else %}
+    			<p>Welcome, new user. Please log in.</p>
+			{% endif %}
+
 			{% block content %}
 			{% endblock %}
 		</div>
