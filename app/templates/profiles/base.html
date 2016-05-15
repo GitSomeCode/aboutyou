@@ -21,9 +21,12 @@
     			<p>
     				Welcome, {{ user.get_username }}. Thanks for 
     				<a href="{% url 'custom_login' %}">logging in</a>.
+    				<a href="{% url 'custom_logout' %}"> Log out</a> here.
     			</p>
 			{% else %}
-    			<p>Welcome, new user. Please log in.</p>
+    			<p>Welcome, new user. Please 
+    				<a href="{% url 'custom_login' %}">log in</a>.
+    			</p>
 			{% endif %}
 
 			{% block content %}

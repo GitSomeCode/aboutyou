@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.views import login
+from django.contrib.auth.views import login, logout
 from django.views.generic import ListView
 
 from .models import Profile
@@ -15,6 +15,10 @@ def custom_login(request):
         return redirect('all')
     else:
         return login(request)
+
+def custom_logout(request):
+    logout(request)
+    return redirect('custom_login')
 
 def index(request):
     print request.META.get('REMOTE_ADDR', None)

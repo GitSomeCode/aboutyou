@@ -7,5 +7,6 @@ urlpatterns = [
 	url(r'^success/$', views.success, name='success'),
 	url(r'^all/$', views.ProfileView.as_view(), name='all'),
 	url(r'^login/$', views.custom_login, name='custom_login'),
+	url(r'^logout/$', views.custom_logout, name='custom_logout'),
 
 ]
