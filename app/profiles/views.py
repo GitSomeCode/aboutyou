@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import login, logout
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import Profile
 from .forms import ProfileForm
@@ -39,7 +39,11 @@ def index(request):
 
     return render(request, 'profiles/fillout.html', {'form':form})
 
-class ProfileView(ListView):
+class ProfileView(DetailView):
+    model = Profile
+    context_object_name = 'profile'
+
+class ProfileList(ListView):
     model = Profile
     context_object_name = 'profiles'
     template_name = 'profiles/all.html'
