@@ -40,8 +40,20 @@ def index(request):
     return render(request, 'profiles/fillout.html', {'form':form})
 
 def profile_update(request, slug):
-    instance = get_object_or_404(Profile, slug=slug)
-    form = ProfileForm(instance=instance)
+    existing = get_object_or_404(Profile, slug=slug)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=existing)
+
+        if form.is_valid():
+            profile_info = form.save(commit=False)
+            profile_info.save()
+            form.save_m2m()
+            return redirect('all')
+        else:
+            print form.errors
+    else:
+        form = ProfileForm(instance=existing)
 
     return render(request, 'profiles/update_profile.html', {'form':form})
 
@@ -49,7 +61,7 @@ def profile_update(request, slug):
 class ProfileView(DetailView):
     model = Profile
     context_object_name = 'profile'
-    template_name = 'profiles/profile_deetail.html'
+    template_name = 'profiles/profile_detail.html'
 
 class ProfileList(ListView):
     model = Profile
