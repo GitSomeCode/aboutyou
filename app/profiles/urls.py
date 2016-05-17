@@ -9,5 +9,5 @@ urlpatterns = [
 	url(r'^logout/$', views.custom_logout, name='custom_logout'),
 	#url(r'^(?P<pk>\d+)/$', views.ProfileView.as_view(), name='profile_view')
 	url(r'^(?P<slug>[-\w]+)/$', views.ProfileView.as_view(), name='profile_view'),
-
+    url(r'^(?P<slug>[-\w]+)/edit/$', views.profile_update, name='profile_update'),
 ]

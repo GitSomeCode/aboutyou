@@ -12,6 +12,7 @@ Tweet something!
 	{% for profile in profiles %}
 		<div>
 			<a href="{% url 'profile_view' slug=profile.slug%}">VIEW</a>
+			<a href="{% url 'profile_update' slug=profile.slug%}">UPDATE</a>
 			{{ profile.first_name }}
 			{{ profile.last_name }}
 			<img src="{{ profile.get_image_url }}">

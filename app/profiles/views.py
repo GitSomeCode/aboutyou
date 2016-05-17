@@ -39,6 +39,13 @@ def index(request):
 
     return render(request, 'profiles/fillout.html', {'form':form})
 
+def profile_update(request, slug):
+    instance = get_object_or_404(Profile, slug=slug)
+    form = ProfileForm(instance=instance)
+
+    return render(request, 'profiles/update_profile.html', {'form':form})
+
+
 class ProfileView(DetailView):
     model = Profile
     context_object_name = 'profile'
