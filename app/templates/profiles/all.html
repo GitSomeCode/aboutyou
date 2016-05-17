@@ -11,7 +11,7 @@ Tweet something!
 {% block content %}
 	{% for profile in profiles %}
 		<div>
-			<a href="{% url 'profile_view' pk=profile.pk%}">VIEW</a>
+			<a href="{% url 'profile_view' slug=profile.slug%}">VIEW</a>
 			{{ profile.first_name }}
 			{{ profile.last_name }}
 			<img src="{{ profile.get_image_url }}">

@@ -42,6 +42,7 @@ def index(request):
 class ProfileView(DetailView):
     model = Profile
     context_object_name = 'profile'
+    template_name = 'profiles/profile_deetail.html'
 
 class ProfileList(ListView):
     model = Profile

@@ -7,6 +7,7 @@ urlpatterns = [
 	url(r'^all/$', views.ProfileList.as_view(), name='all'),
 	url(r'^login/$', views.custom_login, name='custom_login'),
 	url(r'^logout/$', views.custom_logout, name='custom_logout'),
-	url(r'^(?P<pk>\d+)/$', views.ProfileView.as_view(), name='profile_view')
+	#url(r'^(?P<pk>\d+)/$', views.ProfileView.as_view(), name='profile_view')
+	url(r'^(?P<slug>[-\w]+)/$', views.ProfileView.as_view(), name='profile_view'),
 
 ]
