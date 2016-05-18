@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import login, logout
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView
 
@@ -61,6 +62,7 @@ def profile_update(request, slug):
 
     return render(request, 'profiles/update_profile.html', {'form':form})
 
+@method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):
     model = Profile
     fields = ['first_name', 'last_name', 'location', 'spotlight', 'image', 'tags']
