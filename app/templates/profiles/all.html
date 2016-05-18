@@ -13,6 +13,7 @@ Tweet something!
 		<div>
 			<a href="{% url 'profile_view' slug=profile.slug%}">VIEW</a>
 			<a href="{% url 'profile_update' slug=profile.slug%}">UPDATE</a>
+			<a href="{% url 'profile_update_form' slug=profile.slug%}">UPDATE_FORM</a>
 			{{ profile.first_name }}
 			{{ profile.last_name }}
 			<img src="{{ profile.get_image_url }}">

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import login, logout
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import UpdateView
 
 from .models import Profile
 from .forms import ProfileForm
@@ -56,6 +58,14 @@ def profile_update(request, slug):
         form = ProfileForm(instance=existing)
 
     return render(request, 'profiles/update_profile.html', {'form':form})
+
+class ProfileUpdate(UpdateView):
+    model = Profile
+    fields = ['first_name', 'last_name', 'location', 'spotlight', 'image', 'tags']
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse('all')
 
 
 class ProfileView(DetailView):
