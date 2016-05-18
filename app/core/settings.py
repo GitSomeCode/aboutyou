@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 INTERNAL_IPS = ('127.0.0.1', '10.0.2.2',)
 
 # Redirect urls for project
-#LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'all'
 
 
 # Application definition

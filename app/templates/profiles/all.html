@@ -16,7 +16,7 @@ Tweet something!
 			<a href="{% url 'profile_update_form' slug=profile.slug%}">UPDATE_FORM</a>
 			{{ profile.first_name }}
 			{{ profile.last_name }}
-			<img src="{{ profile.get_image_url }}">
+			<img src="{{ profile.get_image_url }}" width="160" height="160">
 
 			{% for tag in profile.tags.all %}
 			<div class="badge">{{ tag }}</div>
