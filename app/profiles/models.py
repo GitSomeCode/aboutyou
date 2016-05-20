@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 #from django.utils.text import slugify
 from taggit.managers import TaggableManager
 from autoslug import AutoSlugField
@@ -14,6 +15,7 @@ class Profile(models.Model):
     spotlight = models.CharField(max_length=120)
     image = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, null=True)
     tags = TaggableManager()
+    owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     slug = AutoSlugField(
         populate_from='get_full_name',
         # slugify=lambda value: value.replace(' ', '-'),
