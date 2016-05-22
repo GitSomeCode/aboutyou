@@ -39,8 +39,7 @@ Make your profile!
                             {{ field.name }}
                             
                             {% if field.name == "image" %}
-                                <p>DISPLAYING IMAGE .....</p>
-                                <img src="{{ field.image.url }}" width="240">
+                                <img src="{{ form.instance.image.url }}" width="240">
 
                                 </br></br>
 

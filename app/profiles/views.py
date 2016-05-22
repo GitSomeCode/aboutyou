@@ -11,6 +11,11 @@ from .models import Profile
 from .forms import ProfileForm
 
 # Create your views here.
+'''
+def owns_profile(user):
+    return user.profile.owner == request.profile.owner
+'''
+
 def success(request):
     return HttpResponse('success!!!')
 
@@ -30,7 +35,6 @@ def index(request):
         form = ProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
-            #import pdb; pdb.set_trace();
             profile_info = form.save(commit=False)
             profile_info.user = request.user
             profile_info.save()
