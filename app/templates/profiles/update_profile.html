@@ -39,7 +39,9 @@ Make your profile!
                             {{ field.name }}
                             
                             {% if field.name == "image" %}
+                                {% if form.instance.image %}
                                 <img src="{{ form.instance.image.url }}" width="240">
+                                {% endif %}
 
                                 </br></br>
 

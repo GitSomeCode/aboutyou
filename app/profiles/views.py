@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.views import login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -15,6 +15,7 @@ from .forms import ProfileForm
 def owns_profile(user):
     return user.profile.owner == request.profile.owner
 '''
+
 
 def success(request):
     return HttpResponse('success!!!')
@@ -48,23 +49,29 @@ def index(request):
     return render(request, 'profiles/fillout.html', {'form':form})
 
 @login_required
-def profile_update(request, slug):
+def profile_update(request, slug, *args, **kwargs):
     existing = get_object_or_404(Profile, slug=slug)
 
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=existing)
-
-        if form.is_valid():
-            profile_info = form.save(commit=False)
-            profile_info.save()
-            form.save_m2m()
-            return redirect('all')
-        else:
-            print form.errors
+    if existing.owner != request.user:
+        #import pdb; pdb.set_trace();
+        #slug = request.user.profile.slug
+        return redirect('profile_view', slug=slug)
     else:
-        form = ProfileForm(instance=existing)
 
-    return render(request, 'profiles/update_profile.html', {'form':form})
+        if request.method == 'POST':
+            form = ProfileForm(request.POST, request.FILES, instance=existing)
+
+            if form.is_valid():
+                profile_info = form.save(commit=False)
+                profile_info.save()
+                form.save_m2m()
+                return redirect('all')
+            else:
+                print form.errors
+        else:
+            form = ProfileForm(instance=existing)
+
+        return render(request, 'profiles/update_profile.html', {'form':form})
 
 @method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):
