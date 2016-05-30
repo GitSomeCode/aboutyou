@@ -6,8 +6,8 @@
 
 {% block content %}
 
+<div class="row">
 {% for profile in profiles %}
-    <div class="row">
         <div class="col-xs-3">
             <div class="panel panel-default">
 
@@ -24,7 +24,9 @@
                         </li>
                         <li style="margin-top: 15px;">
                             <a class="btn btn-default" href="{% url 'profile_view' slug=profile.slug %}">View</a>
-                            <a class="btn btn-default" href="{% url 'profile_update' slug=profile.slug %}">Update</a>
+                            {% if profile.owner == request.user %}
+                            	<a class="btn btn-default" href="{% url 'profile_update' slug=profile.slug %}">Update</a>
+                            {% endif %}
                         </li>
                     </ul>
                 </div> <!-- Panel Body -->
@@ -37,7 +39,7 @@
 
             </div>
         </div>
-    </div>
 {% endfor %}
+</div>
 
 {% endblock %}
