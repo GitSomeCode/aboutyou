@@ -17,7 +17,7 @@ def owns_profile(user):
 '''
 
 def success(request):
-    return HttpResponse('success!!!')
+    raise Http404
 
 def custom_login(request):
     if request.user.is_authenticated():
