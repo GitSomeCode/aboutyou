@@ -60,9 +60,10 @@ def check_owner(view_func):
 @login_required
 @check_owner
 def profile_update(request, slug, *args, **kwargs):
-    '''
+    
     existing = get_object_or_404(Profile, slug=slug)
 
+    '''
     if existing.owner != request.user:
         #import pdb; pdb.set_trace();
         #slug = request.user.profile.slug
@@ -80,14 +81,15 @@ def profile_update(request, slug, *args, **kwargs):
         else:
             print form.errors
     else:
-            form = ProfileForm(instance=existing)
+        form = ProfileForm(instance=existing)
 
     return render(request, 'profiles/update_profile.html', {'form':form})
 
 @method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):
     model = Profile
-    fields = ['first_name', 'last_name', 'location', 'spotlight', 'image', 'tags']
+    form_class = ProfileForm
+    #fields = ['first_name', 'last_name', 'location', 'spotlight', 'image', 'tags']
     template_name_suffix = '_update_form'
 
     def get_success_url(self):
