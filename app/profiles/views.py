@@ -63,13 +63,6 @@ def profile_update(request, slug, *args, **kwargs):
     
     existing = get_object_or_404(Profile, slug=slug)
 
-    '''
-    if existing.owner != request.user:
-        #import pdb; pdb.set_trace();
-        #slug = request.user.profile.slug
-        return redirect('profile_view', slug=slug)
-    else:
-    '''
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=existing)
 
