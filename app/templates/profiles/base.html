@@ -2,40 +2,55 @@
 <!DOCTYPE html>
 
 <html>
+    <head>
+        <title>{% block title %}{% endblock %} | About Me</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap-theme.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+        <!-- Stylesheets -->
+        <style>
+            {% block styles %}
+            {% endblock %}
+        </style>
+    </head>
+
+    <body>
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-5" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button> <a class="navbar-brand" href="{% url 'index' %}">About me</a> 
+                </div> 
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-default navbar-btn navbar-right" href="{% url 'custom_logout' %}">Log out</a>
+                        <p class="navbar-text navbar-right">Hi {{ user.get_username }}!&nbsp;&nbsp;</p>
+                    {% else %}
+                        <a class="btn btn-default navbar-btn navbar-right" href="{% url 'custom_login' %}">Sign In</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
 
 
-	<head>
-		<title>{% block title %}{% endblock %}</title>
-		<link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}">
-		<!--
-		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		-->
-		{% block styles %}
-		{% endblock %}
-	</head>
+        <!-- Content -->
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
 
 
-	<body>
-		<div class="container-fluid">
-			{% if user.is_authenticated %}
-    			<p>
-    				Welcome, {{ user.get_username }}. Thanks for 
-    				<a href="{% url 'custom_login' %}">logging in</a>.
-    				<a href="{% url 'custom_logout' %}"> Log out</a> here.
-    			</p>
-			{% else %}
-    			<p>Welcome, new user. Please 
-    				<a href="{% url 'custom_login' %}">log in</a>.
-    			</p>
-			{% endif %}
+        <!-- Javascript -->
+        <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        {% block scripts %}
+        {% endblock %}
 
-			{% block content %}
-			{% endblock %}
-		</div>
-
-		{% block scripts %}
-    	{% endblock %}
-	</body>
-
-
+    </body>
 </html>

@@ -1,29 +1,43 @@
 {% extends 'profiles/base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-Tweet something!
-{% endblock %}
+{% block title %}Explore{% endblock %}
 
-{% block style %}
-{% endblock %}
 
 {% block content %}
-	{% for profile in profiles %}
-		<div>
-			<a href="{% url 'profile_view' slug=profile.slug%}">VIEW</a>
-			<a href="{% url 'profile_update' slug=profile.slug%}">UPDATE</a>
-			<a href="{% url 'profile_update_form' slug=profile.slug%}">UPDATE_FORM</a>
-			{{ profile.first_name }}
-			{{ profile.last_name }}
-			<img src="{{ profile.get_image_url }}" width="160" height="160">
 
-			{% for tag in profile.tags.all %}
-			<div class="badge">{{ tag }}</div>
-			{% endfor %}
-		</div>
-	{% endfor %}
-{% endblock %}
+{% for profile in profiles %}
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="panel panel-default">
 
-{% block scripts %}
+                <div class="panel-heading">
+                    <h3 class="text-muted text-center" style="margin: 0px;">
+                        {{ profile.first_name }} {{ profile.last_name }}
+                    </h3>
+                </div> <!-- Panel Heading -->
+
+                <div class="panel-body">
+                    <ul class="list list-unstyled text-center">
+                        <li>
+                            <img src="{{ profile.get_image_url }}" class="text-center">
+                        </li>
+                        <li style="margin-top: 15px;">
+                            <a class="btn btn-default" href="{% url 'profile_view' slug=profile.slug %}">View</a>
+                            <a class="btn btn-default" href="{% url 'profile_update' slug=profile.slug %}">Update</a>
+                        </li>
+                    </ul>
+                </div> <!-- Panel Body -->
+
+                <div class="panel-footer text-center">
+                    {% for tag in profile.tags.all %}
+                        <div class="badge">{{ tag }}</div>
+                    {% endfor %}
+                </div> <!-- Panel Footer -->
+
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
 {% endblock %}

@@ -36,7 +36,7 @@ def index(request):
 
         if form.is_valid():
             profile_info = form.save(commit=False)
-            profile_info.user = request.user
+            profile_info.owner = request.user
             profile_info.save()
             form.save_m2m()
             return redirect('success')
