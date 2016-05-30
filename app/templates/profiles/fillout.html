@@ -19,7 +19,7 @@ table.profile-form tbody tr {
                 <div class="panel-body">
         
                     <form action='.' method='post' enctype="multipart/form-data">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <table class="profile-form">
                             {% for hidden in form.hidden_fields %}
                                 {{ hidden }}
