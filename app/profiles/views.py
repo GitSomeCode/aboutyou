@@ -16,7 +16,6 @@ def owns_profile(user):
     return user.profile.owner == request.profile.owner
 '''
 
-
 def success(request):
     return HttpResponse('success!!!')
 
@@ -48,8 +47,20 @@ def index(request):
 
     return render(request, 'profiles/fillout.html', {'form':form})
 
+def check_owner(view_func):
+    def wrapper(request, slug, *args, **kwargs):
+        existing = get_object_or_404(Profile, slug=slug)
+
+        if existing.owner != request.user:
+            return redirect('profile_view', slug=slug)
+        else:
+            return view_func(request, slug, *args, **kwargs)
+    return wrapper
+
 @login_required
+@check_owner
 def profile_update(request, slug, *args, **kwargs):
+    '''
     existing = get_object_or_404(Profile, slug=slug)
 
     if existing.owner != request.user:
@@ -57,21 +68,21 @@ def profile_update(request, slug, *args, **kwargs):
         #slug = request.user.profile.slug
         return redirect('profile_view', slug=slug)
     else:
+    '''
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=existing)
 
-        if request.method == 'POST':
-            form = ProfileForm(request.POST, request.FILES, instance=existing)
-
-            if form.is_valid():
-                profile_info = form.save(commit=False)
-                profile_info.save()
-                form.save_m2m()
-                return redirect('all')
-            else:
-                print form.errors
+        if form.is_valid():
+            profile_info = form.save(commit=False)
+            profile_info.save()
+            form.save_m2m()
+            return redirect('all')
         else:
+            print form.errors
+    else:
             form = ProfileForm(instance=existing)
 
-        return render(request, 'profiles/update_profile.html', {'form':form})
+    return render(request, 'profiles/update_profile.html', {'form':form})
 
 @method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):
