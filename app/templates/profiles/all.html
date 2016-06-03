@@ -33,7 +33,9 @@
 
                 <div class="panel-footer text-center">
                     {% for tag in profile.tags.all %}
-                        <div class="badge">{{ tag }}</div>
+                    	<a href="{% url 'all' %}?{{tag}}">
+                        	<div class="badge">{{ tag }}</div>
+                        </a>
                     {% endfor %}
                 </div> <!-- Panel Footer -->
 

@@ -15,7 +15,9 @@ Detail view
 		<p>Spotlight: {{ profile.spotlight }}</p>
 		<img src="{{ profile.get_image_url }}">
 		{% for tag in profile.tags.all %}
-			<div class="badge">{{ tag }}</div>
+            <a href="{% url 'all' %}?{{tag}}">
+			     <div class="badge">{{ tag }}</div>
+            </a>
 		{% endfor %}
 	</div>
 {% endblock %}

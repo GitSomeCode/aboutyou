@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView
+from django.views.generic import View, DetailView
 from django.views.generic.edit import UpdateView
 
 from .decorators import check_owner
@@ -85,7 +85,16 @@ class ProfileView(DetailView):
     template_name = 'profiles/profile_detail.html'
 
 
-class ProfileList(ListView):
+class ProfileList(View):
     model = Profile
     context_object_name = 'profiles'
     template_name = 'profiles/all.html'
+
+    def get(self, request, *args, **kwargs):
+        query_list = request.GET.keys()
+        if query_list:
+            profiles = Profile.objects.filter(tags__name__in=query_list).distinct()
+        else:
+            profiles = Profile.objects.all()
+        return render(request, 'profiles/all.html', {'profiles': profiles, 'search_tags': query_list})
+
