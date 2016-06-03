@@ -2,11 +2,11 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
-#from django.utils.text import slugify
+
 from taggit.managers import TaggableManager
 from autoslug import AutoSlugField
 
-# Create your models here.
+
 class Profile(models.Model):
     # Required fields
     first_name = models.CharField(max_length=70)
@@ -35,4 +35,3 @@ class Profile(models.Model):
 
     def get_full_name(self):
         return "{0} {1}".format(self.first_name, self.last_name)
-

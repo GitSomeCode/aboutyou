@@ -106,4 +106,3 @@ class ProfileList(View):
         else:
             profiles = Profile.objects.all()
         return render(request, 'profiles/all.html', {'profiles': profiles, 'search_tags': query_list})
-
