@@ -1,6 +1,9 @@
+import operator
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login, logout
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
@@ -93,7 +96,13 @@ class ProfileList(View):
     def get(self, request, *args, **kwargs):
         query_list = request.GET.keys()
         if query_list:
-            profiles = Profile.objects.filter(tags__name__in=query_list).distinct()
+            profiles = Profile.objects.filter(
+                reduce(
+                    operator.or_, (
+                        Q(tags__name__contains=x) for x in query_list
+                    )
+                )
+            ).distinct()
         else:
             profiles = Profile.objects.all()
         return render(request, 'profiles/all.html', {'profiles': profiles, 'search_tags': query_list})
