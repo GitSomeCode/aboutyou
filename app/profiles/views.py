@@ -2,6 +2,7 @@ import operator
 
 from django.contrib.auth.decorators import login_required
 #from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import login, logout
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -28,6 +29,13 @@ def register(request):
             new_user = form.save()
             new_user.set_password(new_user.password)
             new_user.save()
+
+            # Authenticate user and log in.
+            username = new_user.username
+            password = new_user.password
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
             return redirect('custom_login')
         else:
             print form.errors
