@@ -1,7 +1,7 @@
 import operator
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+#from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import login, logout
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -12,7 +12,7 @@ from django.views.generic import View, DetailView
 from django.views.generic.edit import UpdateView
 
 from .decorators import check_owner
-from .forms import ProfileForm
+from .forms import ProfileForm, RegistrationForm
 from .models import Profile
 
 
@@ -22,13 +22,17 @@ def success(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
 
         if form.is_valid():
             new_user = form.save()
-            return redirect('all')
+            new_user.set_password(new_user.password)
+            new_user.save()
+            return redirect('custom_login')
+        else:
+            print form.errors
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
 
     return render(request, 'registration/register.html', {'form': form})
 

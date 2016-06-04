@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from profiles.models import Profile
+
+from .models import Profile, User
 
 
 class ProfileForm(ModelForm):
@@ -23,3 +24,11 @@ class ProfileForm(ModelForm):
         tags = [tag.lower() for tag in tags]
 
         return tags
+
+
+class RegistrationForm(ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+   
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'password']
