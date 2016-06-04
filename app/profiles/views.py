@@ -1,6 +1,7 @@
 import operator
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import login, logout
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -17,6 +18,19 @@ from .models import Profile
 
 def success(request):
     return HttpResponse('success!!!')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            new_user = form.save()
+            return redirect('all')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'registration/register.html', {'form': form})
 
 
 def custom_login(request):

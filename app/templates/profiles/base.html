@@ -33,6 +33,7 @@
                         <p class="navbar-text navbar-right">Hi {{ user.get_username }}!&nbsp;&nbsp;</p>
                     {% else %}
                         <a class="btn btn-default navbar-btn navbar-right" href="{% url 'custom_login' %}">Sign In</a>
+                    	<a class="btn btn-default navbar-btn navbar-right" href="{% url 'custom_register' %}">Sign Up</a>
                     {% endif %}
                 </div>
             </div>
