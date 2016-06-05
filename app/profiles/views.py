@@ -36,7 +36,7 @@ def register(request):
             user = authenticate(username=username, password=password)
             login(request, user)
 
-            return redirect('custom_login')
+            return redirect('all')
         else:
             print form.errors
     else:
