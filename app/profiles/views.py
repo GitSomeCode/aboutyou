@@ -90,6 +90,9 @@ def index(request):
 @login_required
 @check_owner
 def profile_update(request, slug, *args, **kwargs):
+    '''
+    Update a profile.
+    '''
 
     existing = get_object_or_404(Profile, slug=slug)
 
