@@ -42,25 +42,24 @@ def register(request):
 
 
 def login(request):
-    '''
+
     if request.user.is_authenticated():
         return redirect('all')
-    else:
-        '''
-    form = LoginForm(request.POST or None)
+    else: 
+        form = LoginForm(request.POST or None)
 
-    if request.method == 'POST':
-        if form.is_valid():
-            data = form.cleaned_data
-            user = authenticate(email=data['email'], password=data['password'])
+        if request.method == 'POST':
+            if form.is_valid():
+                data = form.cleaned_data
+                user = authenticate(email=data['email'], password=data['password'])
 
-            if user and user.is_active:
-                django_login(request, user)
-                return redirect('all')
-            else:
-                print(form.errors)
+                if user and user.is_active:
+                    django_login(request, user)
+                    return redirect('all')
+                else:
+                    print(form.errors)
 
-    return render(request, 'registration/login.html', {'form': form})
+        return render(request, 'registration/login.html', {'form': form})
 
 
 def logout(request):
