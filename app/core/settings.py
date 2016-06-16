@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'profiles',
 ]
 
+# Custom user model
+AUTH_USER_MODEL = 'profiles.User'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

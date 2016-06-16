@@ -1,9 +1,7 @@
 import operator
 
 from django.contrib.auth.decorators import login_required
-#from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import login, logout
+from django.contrib.auth import login as django_login, logout as django_logout, authenticate
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse
@@ -13,7 +11,7 @@ from django.views.generic import View, DetailView
 from django.views.generic.edit import UpdateView
 
 from .decorators import check_owner
-from .forms import ProfileForm, RegistrationForm
+from .forms import RegistrationForm, LoginForm, ProfileForm
 from .models import Profile
 
 
@@ -22,39 +20,52 @@ def success(request):
 
 
 def register(request):
+    form = RegistrationForm(request.POST or None)
+
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-
         if form.is_valid():
-            new_user = form.save()
-            new_user.set_password(new_user.password)
-            new_user.save()
+            # Creates the new user
+            form.save()
 
-            # Authenticate user and log in.
-            username = new_user.username
-            password = new_user.password
-            user = authenticate(username=username, password=password)
-            login(request, user)
+            # Authenticate and log in user
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password1']
+            user = authenticate(email=email, password=password)
 
-            return redirect('all')
+            if user and user.is_active:
+                django_login(request, user)
+                return redirect('all')
         else:
-            print form.errors
-    else:
-        form = RegistrationForm()
+            print(form.errors)
 
     return render(request, 'registration/register.html', {'form': form})
 
 
-def custom_login(request):
+def login(request):
+    '''
     if request.user.is_authenticated():
         return redirect('all')
     else:
-        return login(request)
+        '''
+    form = LoginForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(email=data['email'], password=data['password'])
+
+            if user and user.is_active:
+                django_login(request, user)
+                return redirect('all')
+            else:
+                print(form.errors)
+
+    return render(request, 'registration/login.html', {'form': form})
 
 
-def custom_logout(request):
-    logout(request)
-    return redirect('custom_login')
+def logout(request):
+    django_logout(request)
+    return redirect('login')
 
 
 def index(request):
