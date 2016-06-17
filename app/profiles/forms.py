@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate
 
 from .models import Profile, User
 
@@ -44,11 +45,16 @@ class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.widgets.TextInput)
     password = forms.CharField(widget=forms.widgets.PasswordInput)
 
-    '''
-    class Meta:
-        model = User
-        fields = ('email', 'password')
-    '''
+    def clean(self):
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password']
+
+        is_user = authenticate(email=email, password=password)
+
+        if not is_user:
+            raise forms.ValidationError("Invalid email or password. Please try again.")
+
+        return self.cleaned_data
 
 
 class ProfileForm(forms.ModelForm):
