@@ -12,7 +12,12 @@ Detail view
 	<div>
 		<p>Name: {{ profile.first_name }} {{ profile.last_name }}</p>
 		<p>Location: {{ profile.location }}</p>
-		<p>Spotlight: {{ profile.spotlight }}</p>
+		<p>
+			
+				{{ profile.spotlight }}
+
+		</p>
+		<p>Website: {{ profile.website }}</p>
 		<img src="{{ profile.get_image_url }}">
 		{% for tag in profile.tags.all %}
             <a href="{% url 'all' %}?{{tag}}">

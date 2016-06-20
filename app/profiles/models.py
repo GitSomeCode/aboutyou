@@ -62,14 +62,43 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
 
+class Spotlight(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Occupation(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Profile(models.Model):
     # Required fields
     first_name = models.CharField(max_length=70)
     last_name = models.CharField(max_length=70)
     location = models.CharField(max_length=120)
-    spotlight = models.CharField(max_length=120)
+    spotlight = models.ForeignKey(
+            Spotlight,
+            on_delete=models.CASCADE,
+            related_name='profiles'
+    )
+    website = models.URLField(max_length=120)
     image = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, null=True)
     tags = TaggableManager()
+
+    # Optional fields
+    bio = models.TextField(blank=True, null=True)
+    school1 = models.CharField(max_length=150, blank=True, null=True)
+    school2 = models.CharField(max_length=150, blank=True, null=True)
+    occupations = models.ManyToManyField(
+            Occupation,
+            related_name='profiles'
+    )
+
     owner = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

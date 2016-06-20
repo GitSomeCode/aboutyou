@@ -63,7 +63,7 @@ class ProfileForm(forms.ModelForm):
     '''
     class Meta:
         model = Profile
-        fields = ['first_name', 'last_name', 'location', 'spotlight', 'image', 'tags']
+        fields = ['first_name', 'last_name', 'location', 'image', 'tags']
 
     def clean_tags(self):
         """
