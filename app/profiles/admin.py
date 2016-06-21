@@ -3,9 +3,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.models import Group
+from django.utils.html import format_html_join
 from django.utils.translation import ugettext_lazy as _
 
-from .models import User, Profile
+from .models import User, Profile, Spotlight, Occupation, SocialMediaService, SocialMediaLink
 
 
 class UserCreationForm(forms.ModelForm):
@@ -116,6 +117,11 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
 
 
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = (
+        'first_name', 'owner')
+
+
 admin.site.register(User, UserAdmin)
-admin.site.register(Profile)
+admin.site.register(Profile, ProfileAdmin)
 admin.site.unregister(Group)

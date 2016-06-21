@@ -76,6 +76,12 @@ class Occupation(models.Model):
         return self.name
 
 
+class SocialMediaService(models.Model):
+    name = models.CharField(max_length=50)
+    logo = models.ImageField(upload_to='logos/%Y/%m/%d', blank=True, null=True)
+    placeholder = models.CharField(max_length=50, blank=True, null=True)
+
+
 class Profile(models.Model):
     # Required fields
     first_name = models.CharField(max_length=70)
@@ -96,7 +102,8 @@ class Profile(models.Model):
     school2 = models.CharField(max_length=150, blank=True, null=True)
     occupations = models.ManyToManyField(
             Occupation,
-            related_name='profiles'
+            related_name='profiles',
+            blank=True
     )
 
     owner = models.OneToOneField(
@@ -123,3 +130,17 @@ class Profile(models.Model):
 
     def get_full_name(self):
         return "{0} {1}".format(self.first_name, self.last_name)
+
+
+class SocialMediaLink(models.Model):
+    user_profile = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name='links'
+    )
+    service = models.ForeignKey(
+        SocialMediaService,
+        on_delete=models.CASCADE,
+        related_name='user_links'
+    )
+    link = models.URLField(max_length=120)
