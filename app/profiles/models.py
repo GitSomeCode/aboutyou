@@ -148,5 +148,8 @@ class SocialMediaLink(models.Model):
     )
     link = models.URLField(max_length=120)
 
+    class Meta:
+        unique_together = ('user_profile', 'service')
+
     def __unicode__(self):
         return '{0}-{1}'.format(self.user_profile.first_name, self.service.name)
