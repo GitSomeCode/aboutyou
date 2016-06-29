@@ -81,6 +81,9 @@ class SocialMediaService(models.Model):
     logo = models.ImageField(upload_to='logos/%Y/%m/%d', blank=True, null=True)
     placeholder = models.CharField(max_length=50, blank=True, null=True)
 
+    def __unicode__(self):
+        return self.name
+
 
 class Profile(models.Model):
     # Required fields
@@ -144,3 +147,6 @@ class SocialMediaLink(models.Model):
         related_name='user_links'
     )
     link = models.URLField(max_length=120)
+
+    def __unicode__(self):
+        return '{0}-{1}'.format(self.user_profile.first_name, self.service.name)

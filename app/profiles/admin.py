@@ -119,9 +119,20 @@ class UserAdmin(BaseUserAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = (
-        'first_name', 'owner')
+        '__unicode__', 'owner'
+    )
+
+    list_filter = (
+        'owner__is_staff',
+        'owner__is_superuser'
+    )
 
 
 admin.site.register(User, UserAdmin)
-admin.site.register(Profile, ProfileAdmin)
+# admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Profile,ProfileAdmin)
+admin.site.register(Spotlight)
+admin.site.register(Occupation)
+admin.site.register(SocialMediaService)
+admin.site.register(SocialMediaLink)
 admin.site.unregister(Group)
