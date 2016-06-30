@@ -97,6 +97,12 @@ class Profile(models.Model):
     )
     website = models.URLField(max_length=120)
     image = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, null=True)
+    social = models.ManyToManyField(
+            SocialMediaService,
+            related_name='profiles',
+            through='SocialMediaLink',
+            blank=True
+    )
     tags = TaggableManager()
 
     # Optional fields
@@ -124,6 +130,9 @@ class Profile(models.Model):
 
     def __unicode__(self):
         return self.first_name + ' ' + self.last_name
+
+    def display_social(self):
+        return ', '.join(service.name for service in self.social.all())
 
     def get_image_url(self):
         if self.image:

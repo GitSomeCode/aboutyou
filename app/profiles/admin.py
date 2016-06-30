@@ -119,12 +119,19 @@ class UserAdmin(BaseUserAdmin):
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = (
-        '__unicode__', 'owner'
+        '__unicode__', 'owner', 'display_social'
     )
 
     list_filter = (
         'owner__is_staff',
         'owner__is_superuser'
+    )
+
+
+class LinkAdmin(admin.ModelAdmin):
+    list_display = (
+        'user_profile',
+        'service',
     )
 
 
@@ -134,5 +141,5 @@ admin.site.register(Profile,ProfileAdmin)
 admin.site.register(Spotlight)
 admin.site.register(Occupation)
 admin.site.register(SocialMediaService)
-admin.site.register(SocialMediaLink)
+admin.site.register(SocialMediaLink,LinkAdmin)
 admin.site.unregister(Group)
